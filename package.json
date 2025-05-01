@@ -4,7 +4,7 @@
   "description": "This is a repo for some utilites for making/solving Wijuko puzzles.",
   "main": "index.js",
   "scripts": {
-    "test": "standard || mocha --exit utest.js"
+    "test": "standard && mocha --exit utest.js"
   },
   "repository": {
     "type": "git",

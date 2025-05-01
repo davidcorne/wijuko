@@ -26,18 +26,18 @@ class Wijuko {
   fillHints () {
     this.hints[0] = this.grid[0] + this.grid[1]
     this.hints[1] = this.grid[1] + this.grid[2]
-  
+
     this.hints[2] = this.grid[0] + this.grid[3]
     this.hints[3] = this.grid[1] + this.grid[4]
     this.hints[4] = this.grid[2] + this.grid[5]
-  
+
     this.hints[5] = this.grid[3] + this.grid[4]
     this.hints[6] = this.grid[4] + this.grid[5]
-  
+
     this.hints[7] = this.grid[3] + this.grid[6]
     this.hints[8] = this.grid[4] + this.grid[7]
     this.hints[9] = this.grid[5] + this.grid[8]
-  
+
     this.hints[10] = this.grid[6] + this.grid[7]
     this.hints[11] = this.grid[7] + this.grid[8]
   }
@@ -122,13 +122,13 @@ const generate = function (gen) {
   // Let's just put all sums in as hints
   puzzle.fillHints()
   // Now let's randomly remove 5 of them, by picking the indicies
-  const indices = Array.from({ length: 12 }, (_, i) => i);
+  const indices = Array.from({ length: 12 }, (_, i) => i)
   for (let i = indices.length - 1; i > 0; i--) {
     const j = Math.floor(gen() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
+    [indices[i], indices[j]] = [indices[j], indices[i]]
   }
-  const toUndefine = indices.slice(0, 5);
-  toUndefine.forEach(i => puzzle.hints[i] = undefined);
+  const toUndefine = indices.slice(0, 5)
+  toUndefine.forEach(i => { puzzle.hints[i] = undefined })
   return puzzle
 }
 
@@ -152,43 +152,67 @@ const generateSVG = function (puzzle) {
   <!-- Diamonds with numbers -->
 `,
 
-  puzzle.hints[0] ? `<polygon points="100,40 110,50 100,60 90,50" fill="white" stroke="black"/>
+  puzzle.hints[0]
+    ? `<polygon points="100,40 110,50 100,60 90,50" fill="white" stroke="black"/>
   <text x="100" y="50" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[0]}</text>
-` : '',
-  puzzle.hints[1] ? `<polygon points="200,40 210,50 200,60 190,50" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[1]
+    ? `<polygon points="200,40 210,50 200,60 190,50" fill="white" stroke="black"/>
   <text x="200" y="50" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[1]}</text>
-` : '',
-  puzzle.hints[2] ? `<polygon points="40,100 50,110 60,100 50,90" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[2]
+    ? `<polygon points="40,100 50,110 60,100 50,90" fill="white" stroke="black"/>
   <text x="50" y="100" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[2]}</text>
-` : '',
-  puzzle.hints[3] ? `<polygon points="140,100 150,110 160,100 150,90" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[3]
+    ? `<polygon points="140,100 150,110 160,100 150,90" fill="white" stroke="black"/>
   <text x="150" y="100" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[3]}</text>
-` : '',
-  puzzle.hints[4] ? `<polygon points="240,100 250,110 260,100 250,90" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[4]
+    ? `<polygon points="240,100 250,110 260,100 250,90" fill="white" stroke="black"/>
   <text x="250" y="100" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[4]}</text>
-` : '',
-  puzzle.hints[5] ? `<polygon points="100,140 110,150 100,160 90,150" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[5]
+    ? `<polygon points="100,140 110,150 100,160 90,150" fill="white" stroke="black"/>
   <text x="100" y="150" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[5]}</text>
-` : '',
-  puzzle.hints[6] ? `<polygon points="200,140 210,150 200,160 190,150" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[6]
+    ? `<polygon points="200,140 210,150 200,160 190,150" fill="white" stroke="black"/>
   <text x="200" y="150" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[6]}</text>
-` : '',
-  puzzle.hints[7] ? `<polygon points="40,200 50,210 60,200 50,190" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[7]
+    ? `<polygon points="40,200 50,210 60,200 50,190" fill="white" stroke="black"/>
   <text x="50" y="200" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[7]}</text>
-` : '',
-  puzzle.hints[8] ? `<polygon points="140,200 150,210 160,200 150,190" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[8]
+    ? `<polygon points="140,200 150,210 160,200 150,190" fill="white" stroke="black"/>
   <text x="150" y="200" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[8]}</text>
-` : '',
-  puzzle.hints[9] ? `<polygon points="240,200 250,210 260,200 250,190" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[9]
+    ? `<polygon points="240,200 250,210 260,200 250,190" fill="white" stroke="black"/>
   <text x="250" y="200" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[9]}</text>
-` : '',
-  puzzle.hints[10] ? `<polygon points="100,240 110,250 100,260 90,250" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[10]
+    ? `<polygon points="100,240 110,250 100,260 90,250" fill="white" stroke="black"/>
   <text x="100" y="250" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[10]}</text>
-` : '',
-  puzzle.hints[11] ? `<polygon points="200,240 210,250 200,260 190,250" fill="white" stroke="black"/>
+`
+    : '',
+  puzzle.hints[11]
+    ? `<polygon points="200,240 210,250 200,260 190,250" fill="white" stroke="black"/>
   <text x="200" y="250" text-anchor="middle" dominant-baseline="middle" font-size="12">${puzzle.hints[11]}</text>
-` : '',
-'</svg>'
+`
+    : '',
+  '</svg>'
   ]
   return svgTemplateStrings.join('')
 }
