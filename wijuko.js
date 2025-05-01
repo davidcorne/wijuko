@@ -18,11 +18,29 @@ class Wijuko {
    * -H7 -+   +-H8 -+   +-H9 -
    *  G6  |H10| G7  |H11| G8
    */
-  constructor () {
-    this.grid = []
+  constructor (grid) {
+    this.grid = grid
     this.hints = []
   }
 
+  fillHints () {
+    this.hints[0] = this.grid[0] + this.grid[1]
+    this.hints[1] = this.grid[1] + this.grid[2]
+  
+    this.hints[2] = this.grid[0] + this.grid[3]
+    this.hints[3] = this.grid[1] + this.grid[4]
+    this.hints[4] = this.grid[2] + this.grid[5]
+  
+    this.hints[5] = this.grid[3] + this.grid[4]
+    this.hints[6] = this.grid[4] + this.grid[5]
+  
+    this.hints[7] = this.grid[3] + this.grid[6]
+    this.hints[8] = this.grid[4] + this.grid[7]
+    this.hints[9] = this.grid[5] + this.grid[8]
+  
+    this.hints[10] = this.grid[6] + this.grid[7]
+    this.hints[11] = this.grid[7] + this.grid[8]
+  }
   gridLine (gridStart, hintLine) {
     const line = [
       '+  ',
@@ -101,33 +119,17 @@ const generateGridArray = function (gen) {
 }
 
 const generate = function (gen) {
-  const puzzle = new Wijuko()
   // Get a new random array for the number grid
-  puzzle.grid = generateGridArray(gen)
+  const grid = generateGridArray(gen)
+  const puzzle = new Wijuko(grid)
   // Let's just put all sums in as hints
-  puzzle.hints = Array(12)
-  puzzle.hints[0] = puzzle.grid[0] + puzzle.grid[1]
-  puzzle.hints[1] = puzzle.grid[1] + puzzle.grid[2]
-
-  puzzle.hints[2] = puzzle.grid[0] + puzzle.grid[3]
-  puzzle.hints[3] = puzzle.grid[1] + puzzle.grid[4]
-  puzzle.hints[4] = puzzle.grid[2] + puzzle.grid[5]
-
-  puzzle.hints[5] = puzzle.grid[3] + puzzle.grid[4]
-  puzzle.hints[6] = puzzle.grid[4] + puzzle.grid[5]
-
-  puzzle.hints[7] = puzzle.grid[3] + puzzle.grid[6]
-  puzzle.hints[8] = puzzle.grid[4] + puzzle.grid[7]
-  puzzle.hints[9] = puzzle.grid[5] + puzzle.grid[8]
-
-  puzzle.hints[10] = puzzle.grid[6] + puzzle.grid[7]
-  puzzle.hints[11] = puzzle.grid[7] + puzzle.grid[8]
+  puzzle.fillHints()
+  
   return puzzle
 }
 
 const generateStandard1 = function () {
-  const puzzle = new Wijuko()
-  puzzle.grid = [9, 7, 3, 6, 8, 5, 4, 1, 2]
+  const puzzle = new Wijuko([9, 7, 3, 6, 8, 5, 4, 1, 2])
   puzzle.hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
   return puzzle
 }
