@@ -41,18 +41,19 @@ class Wijuko {
     this.hints[10] = this.grid[6] + this.grid[7]
     this.hints[11] = this.grid[7] + this.grid[8]
   }
-  gridLine (gridStart, hintLine) {
+
+  gridLine (gridStart, hintLine, printGridNumber) {
     const line = [
       '+  ',
-      this.grid[gridStart + 0],
+      printGridNumber ? this.grid[gridStart] : ' ',
       '  ',
       this.hints[hintLine] ? hintToString(this.hints[hintLine]) : ' || ',
       ' ',
-      this.grid[gridStart + 1],
+      printGridNumber ? this.grid[gridStart + 1] : ' ',
       '  ',
       this.hints[hintLine + 1] ? hintToString(this.hints[hintLine + 1]) : ' || ',
       '  ',
-      this.grid[gridStart + 2],
+      printGridNumber ? this.grid[gridStart + 2] : ' ',
       '  |'
     ]
     return line.join('')
@@ -71,11 +72,7 @@ class Wijuko {
     return line.join('')
   }
 
-  /**
-   *
-   * @param {*} stream
-   */
-  prettyPrint (stream) {
+  prettyPrint (stream, printGridNumber) {
     /**
      * This looks like this:
      * +------++------++------+
@@ -97,11 +94,11 @@ class Wijuko {
      */
     const border = '+------++------++------+'
     stream(border)
-    stream(this.gridLine(0, 0))
+    stream(this.gridLine(0, 0, printGridNumber))
     stream(this.hintLine(2))
-    stream(this.gridLine(3, 5))
+    stream(this.gridLine(3, 5, printGridNumber))
     stream(this.hintLine(7))
-    stream(this.gridLine(6, 10))
+    stream(this.gridLine(6, 10, printGridNumber))
     stream(border)
   }
 }
@@ -124,7 +121,14 @@ const generate = function (gen) {
   const puzzle = new Wijuko(grid)
   // Let's just put all sums in as hints
   puzzle.fillHints()
-  
+  // Now let's randomly remove 5 of them, by picking the indicies
+  const indices = Array.from({ length: 12 }, (_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(gen() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  const toUndefine = indices.slice(0, 5);
+  toUndefine.forEach(i => puzzle.hints[i] = undefined);
   return puzzle
 }
 

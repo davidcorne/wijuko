@@ -3,10 +3,16 @@ const wijuko = require('./wijuko')
 const main = function () {
   const puzzleRand = wijuko.generate(Math.random)
   const puzzleFixed = wijuko.generateStandard1()
-  puzzleRand.prettyPrint(console.log)
-  console.log('')
-  puzzleFixed.prettyPrint(console.log)
-  // puzzle.hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
+  // Print the puzzle solved
+  let printGridNumber = true
+  puzzleRand.prettyPrint(console.log, printGridNumber)
+  // Print 20 blank lines
+  for (let i = 0; i < 20; i++) {
+    console.log('')
+  }
+  // Print the puzzle with the grid numbers hidden
+  printGridNumber = false
+  puzzleRand.prettyPrint(console.log, printGridNumber)
 }
 
 main()
