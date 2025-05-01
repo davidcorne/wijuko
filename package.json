@@ -1,0 +1,27 @@
+{
+  "name": "wijuko",
+  "version": "1.0.0",
+  "description": "This is a repo for some utilites for making/solving Wijuko puzzles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard || mocha --exit utest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidcorne/wijuko.git"
+  },
+  "author": "David Corne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidcorne/wijuko/issues"
+  },
+  "homepage": "https://github.com/davidcorne/wijuko#readme",
+  "dependencies": {
+    "random-seed": "^0.3.0",
+    "standard": "^17.1.2"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.2.2"
+  }
+}
