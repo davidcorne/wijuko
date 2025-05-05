@@ -4,6 +4,7 @@ const chai = require('chai')
 const assert = chai.assert
 
 const wijuko = require('./wijuko')
+const solver = require('./solver')
 
 describe('generate', function () {
   it('generateGridArray Math.random', function () {
@@ -26,5 +27,19 @@ describe('generate', function () {
   it('generate Math.random', function () {
     const puzzle = wijuko.generate(Math.random)
     assert.strictEqual(9, puzzle.grid.length)
+  })
+})
+
+describe('solve', function () {
+  it('isSolution', function () {
+    const grid = [9, 7, 3, 6, 8, 5, 4, 1, 2]
+    const hints1 = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
+    assert.ok(solver.isSolution(grid, hints1))
+    
+    const hints2 = [17, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
+    assert.ok(!solver.isSolution(grid, hints2))
+
+    const hints3 = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 2]
+    assert.ok(!solver.isSolution(grid, hints3))
   })
 })
