@@ -123,7 +123,8 @@ const generate = function (gen) {
   const puzzle = new Wijuko(grid)
   // Let's just put all sums in as hints
   puzzle.fillHints()
-  // Now let's randomly remove 5 of them, by picking the indicies
+  // Now remove hints until we have a good puzzle
+  // Make a randomised list of indicies to remove
   const indices = Array.from({ length: 12 }, (_, i) => i)
   for (let i = indices.length - 1; i > 0; i--) {
     const j = Math.floor(gen() * (i + 1));
@@ -138,7 +139,6 @@ const generate = function (gen) {
     if (solutions.length > 1) {
       // Multiple solutions, reinstate the hint and break
       puzzle.hints[indices[i]] = hintToRemove
-      break
     }
   }
   return puzzle
@@ -151,8 +151,16 @@ const generateStandard1 = function () {
 }
 
 const generateSVG = function (puzzle) {
-  const svgTemplateStrings = [`<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <!-- Border -->
+  const svgTemplateStrings = [
+    `<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+    `,
+    `<!-- Solution -->
+    <!-- ${puzzle.grid[0]} ${puzzle.grid[1]} ${puzzle.grid[2]}-->
+    <!-- ${puzzle.grid[3]} ${puzzle.grid[4]} ${puzzle.grid[5]}-->
+    <!-- ${puzzle.grid[6]} ${puzzle.grid[7]} ${puzzle.grid[8]}-->
+    
+    `,
+  `<!-- Border -->
   <rect x="0" y="0" width="300" height="300" fill="none" stroke="black" stroke-width="4"/>
   
   <!-- Grid Lines -->
