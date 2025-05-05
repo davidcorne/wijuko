@@ -26,9 +26,9 @@ APP.get('/', (req, res) => {
     ${svg}
   </body>
   </html>
-`;
+`
 
-res.send(html);
+  res.send(html)
 })
 
 APP.listen(PORT, () => {
