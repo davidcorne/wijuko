@@ -35,11 +35,18 @@ describe('solve', function () {
     const grid = [9, 7, 3, 6, 8, 5, 4, 1, 2]
     const hints1 = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
     assert.ok(solver.isSolution(grid, hints1))
-    
+
     const hints2 = [17, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
     assert.ok(!solver.isSolution(grid, hints2))
 
     const hints3 = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 2]
     assert.ok(!solver.isSolution(grid, hints3))
+  })
+  it('solve', function () {
+    const hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
+    const solutions = solver.solve(hints)
+    // There should only be one solution
+    assert.strictEqual(solutions.length, 1)
+    assert.deepEqual(solutions[0], [9, 7, 3, 6, 8, 5, 4, 1, 2])
   })
 })
