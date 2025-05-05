@@ -1,5 +1,7 @@
 'use strict'
 
+const solver = require('./solver')
+
 const hintToString = function (hint) {
   const line = [
     '<',
@@ -127,8 +129,18 @@ const generate = function (gen) {
     const j = Math.floor(gen() * (i + 1));
     [indices[i], indices[j]] = [indices[j], indices[i]]
   }
-  const toUndefine = indices.slice(0, 5)
-  toUndefine.forEach(i => { puzzle.hints[i] = undefined })
+  const toUndefine = indices
+  // Remove hints until there would be multiple solutions, then step back once
+  for (let i = 0; i < 12; ++i) {
+    const hintToRemove = puzzle.hints[indices[i]]
+    puzzle.hints[indices[i]] = undefined
+    const solutions = solver.solve(puzzle.hints)
+    if (solutions.length > 1) {
+      // Multiple solutions, reinstate the hint and break
+      puzzle.hints[indices[i]] = hintToRemove
+      break
+    }
+  }
   return puzzle
 }
 
