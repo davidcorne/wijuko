@@ -130,7 +130,6 @@ const generate = function (gen) {
     const j = Math.floor(gen() * (i + 1));
     [indices[i], indices[j]] = [indices[j], indices[i]]
   }
-  const toUndefine = indices
   // Remove hints until there would be multiple solutions, then step back once
   for (let i = 0; i < 12; ++i) {
     const hintToRemove = puzzle.hints[indices[i]]

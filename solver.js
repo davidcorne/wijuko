@@ -27,9 +27,9 @@ function generateGrids () {
 const solve = function (hints) {
   // Generate all grids, check if any solve them
   // Note: this is NOT efficient
-    const allGrids = generateGrids()
-    const solutions = allGrids.filter((grid) => isSolution(grid, hints))
-    return solutions
+  const allGrids = generateGrids()
+  const solutions = allGrids.filter((grid) => isSolution(grid, hints))
+  return solutions
 }
 
 const isSolution = function (grid, hints) {
