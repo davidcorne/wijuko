@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/davidcorne/wijuko#readme",
   "dependencies": {
+    "express": "^5.1.0",
     "random-seed": "^0.3.0",
     "standard": "^17.1.2"
   },
