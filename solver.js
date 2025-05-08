@@ -34,13 +34,10 @@ class Possibility {
     this.possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   }
 
-  length() {
-    return this.possibilities.length
-  }
-
   filter(predicate) {
     this.possibilities = this.possibilities.filter((item, index, array) => predicate(item))
   }
+
   hint(hint) {
     if (hint === 17) {
       // Can only be 8, 9
@@ -53,6 +50,51 @@ class Possibility {
     if (hint === 15) {
       // Can be 6+
       this.filter(item => item >= 6)
+    }
+    if (hint === 14) {
+      // [5, 9], [6, 8]
+      this.filter(item => item === 5 || item === 9 || item === 6 || item === 8)
+    }
+    if (hint === 13) {
+      // [4, 9], [5, 8], [6, 7]
+      this.filter(item => item === 4 || item === 9 || item === 5 || item === 8 || item === 6 || item === 7)}
+    if (hint === 12) {
+      // [3, 9], [4, 8], [5, 7]
+      this.filter(item => item === 3 || item === 9 || item === 4 || item === 8 || item === 5 || item === 7)
+    }
+    if (hint === 11) {
+      // [2, 9], [3, 8], [4, 7], [5, 6]
+      // i.e. can't be 1
+      this.filter(item => item !== 1)
+    }
+    if (hint === 10) {
+      // Can't be 5
+      this.filter(item => item !== 5)
+    }
+    if (hint === 9) {
+      // Can't be 9
+      this.filter(item => item !== 9)
+    }
+    if (hint === 8) {
+      // Under 8, can't be 4
+      this.filter(item => item === 1 || item === 2 || item === 3 || item === 5 || item === 6 || item === 7)
+    }
+    if (hint === 7) {
+      // [1, 6], [2, 5], [3, 4]
+      this.filter(item => item <= 6)
+    }
+    if (hint === 6) {
+      // Under 6, can't be 3
+      this.filter(item => item === 1 || item === 2 || item === 4 || item === 5)
+    }
+    if (hint === 5) {
+      this.filter(item => item <= 4)
+    }
+    if (hint === 4) {
+      this.filter(item => item === 1 || item === 3)
+    }
+    if (hint === 3) {
+      this.filter(item => item === 1 || item === 2)
     }
   }
 }

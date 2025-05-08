@@ -58,7 +58,7 @@ describe('solve', function () {
   })
   it('possibilities', function () {
     const pos = new solver.Possibility()
-    assert.strictEqual(pos.length(), 9)
+    assert.strictEqual(pos.possibilities.length, 9)
   })
   it('possibillity array permutations', function () {
     const possibilities = [
