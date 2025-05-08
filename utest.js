@@ -26,7 +26,6 @@ describe('generate', function () {
   })
   it('generate Math.random', function () {
     const puzzle = wijuko.generate(Math.random)
-    console.log(puzzle.hints)
     assert.strictEqual(9, puzzle.grid.length)
   })
 })
