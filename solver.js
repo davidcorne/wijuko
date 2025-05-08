@@ -99,16 +99,16 @@ class Possibility {
   }
 }
 
-const possibilitiesPermutations = function (options) {
+const possibilitiesPermutations = function (possibilities) {
   const result = []
 
   function helper (current, index) {
-    if (index === options.length) {
+    if (index === possibilities.length) {
       result.push([...current])
       return
     }
 
-    for (const val of options[index].possibilities) {
+    for (const val of possibilities[index].possibilities) {
       current.push(val)
       helper(current, index + 1)
       current.pop()
@@ -119,14 +119,73 @@ const possibilitiesPermutations = function (options) {
   return result
 }
 
+const generatePossibilities = function(hints) {
+  const possibilities = [];
+  for (let i = 0; i < 9; i++) {
+    possibilities.push(new Possibility());
+  }
+  if (hints[0]) {
+    possibilities[0].hint(hints[0])
+    possibilities[1].hint(hints[0])
+  }
+  if (hints[1]) {
+    possibilities[1].hint(hints[1])
+    possibilities[2].hint(hints[1])
+  }
+  if (hints[2]) {
+    possibilities[0].hint(hints[2])
+    possibilities[3].hint(hints[2])
+  }
+  if (hints[3]) {
+    possibilities[1].hint(hints[3])
+    possibilities[4].hint(hints[3])
+  }
+  if (hints[4]) {
+    possibilities[2].hint(hints[4])
+    possibilities[5].hint(hints[4])
+  }
+  if (hints[5]) {
+    possibilities[3].hint(hints[5])
+    possibilities[4].hint(hints[5])
+  }
+  if (hints[6]) {
+    possibilities[4].hint(hints[6])
+    possibilities[5].hint(hints[6])
+  }
+  if (hints[7]) {
+    possibilities[3].hint(hints[7])
+    possibilities[6].hint(hints[7])
+  }
+  if (hints[8]) {
+    possibilities[4].hint(hints[8])
+    possibilities[7].hint(hints[8])
+  }
+  if (hints[9]) {
+    possibilities[5].hint(hints[9])
+    possibilities[8].hint(hints[9])
+  }
+  if (hints[10]) {
+    possibilities[6].hint(hints[10])
+    possibilities[7].hint(hints[10])
+  }
+  if (hints[11]) {
+    possibilities[7].hint(hints[11])
+    possibilities[8].hint(hints[11])
+  }
+  return possibilities
+}
+
 /**
  * An algorithm which examains the possible
  * @param {Array} hints
  * @returns {Array}
  */
-const possibilitySolve = function (options) {
+const possibilitySolve = function (hints) {
   // Narrow down the possibilities
-  return [[9, 7, 3, 6, 8, 5, 4, 1, 2]]
+  const possibilities = generatePossibilities(hints)
+  const possibleGrids = possibilitiesPermutations(possibilities)
+  const solutions = possibleGrids.filter((grid) => isSolution(grid, hints))
+  return solutions
 }
 
 /**
@@ -143,6 +202,12 @@ const bruteForceSolve = function (hints) {
 }
 
 const isSolution = function (grid, hints) {
+  // Check there's exactly one of each number, by summing them to 45
+  const sum = grid.reduce((a, b) => a + b, 0)
+  if (sum !== 45) {
+    return false
+  }
+
   if (hints[0] && hints[0] !== grid[0] + grid[1]) {
     return false
   }
@@ -188,3 +253,4 @@ module.exports.isSolution = isSolution
 module.exports.Possibility = Possibility
 module.exports.possibilitiesPermutations = possibilitiesPermutations
 module.exports.possibilitySolve = possibilitySolve
+module.exports.generatePossibilities = generatePossibilities

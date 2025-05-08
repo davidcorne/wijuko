@@ -26,6 +26,7 @@ describe('generate', function () {
   })
   it('generate Math.random', function () {
     const puzzle = wijuko.generate(Math.random)
+    console.log(puzzle.hints)
     assert.strictEqual(9, puzzle.grid.length)
   })
 })
@@ -94,6 +95,20 @@ describe('solve', function () {
     pos4.hint(17)
     pos4.hint(16)
     assert.deepEqual(pos4.possibilities, [9])
+  })
+  it('possibillity generation', function () {
+    const hints = [9, 13, 5, 16, 10, 12, 13, 11, 14, 5, 13, 6]
+    // The grid will be [2, 7, 6, 3, 9, 4, 8, 5, 1]
+    const possibilities = solver.generatePossibilities(hints)
+    assert.deepEqual(possibilities[0].possibilities, [1, 2, 3, 4])
+    assert.deepEqual(possibilities[1].possibilities, [7])
+    assert.deepEqual(possibilities[2].possibilities, [4, 6, 7, 8, 9])
+    assert.deepEqual(possibilities[3].possibilities, [3, 4])
+    assert.deepEqual(possibilities[4].possibilities, [9])
+    assert.deepEqual(possibilities[5].possibilities, [4])
+    assert.deepEqual(possibilities[6].possibilities, [4, 5, 6, 7, 8, 9])
+    assert.deepEqual(possibilities[7].possibilities, [5])
+    assert.deepEqual(possibilities[8].possibilities, [1, 2, 4])
   })
   it('possibillity solve', function () {
     const hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
