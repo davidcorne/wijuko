@@ -25,6 +25,72 @@ function generateGrids () {
  * @returns {Array}
  */
 const solve = function (hints) {
+  return bruteForceSolve(hints)
+}
+
+class Possibility {
+
+  constructor () {
+    this.possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  }
+
+  length() {
+    return this.possibilities.length
+  }
+  hint(hint) {
+    if (hint === 17) {
+      // Can only be 8, 9
+      // this.possibilities.filter((item, index, array) =>)
+        this.possibilities = [8, 9]
+      }
+    if (hint === 16) {
+      // Can only be 7, 9
+      this.possibilities = [7, 9]
+    }
+    if (hint === 15) {
+      // Can be 6+
+      this.possibilities = [6, 7, 8, 9]
+    }
+  }
+}
+
+const possibilitiesPermutations = function (options) {
+  const result = [];
+
+  function helper(current, index) {
+    if (index === options.length) {
+      result.push([...current]);
+      return;
+    }
+
+    for (let val of options[index].possibilities) {
+      current.push(val);
+      helper(current, index + 1);
+      current.pop();
+    }
+  }
+
+  helper([], 0);
+  return result;  
+}
+
+/**
+ * An algorithm which examains the possible 
+ * @param {Array} hints
+ * @returns {Array}
+ */
+const possibilitySolve = function (options) {
+  // Narrow down the possibilities
+  return [[9, 7, 3, 6, 8, 5, 4, 1, 2]]
+}
+
+
+/**
+ * Return a grid
+ * @param {Array} hints
+ * @returns {Array}
+ */
+const bruteForceSolve = function (hints) {
   // Generate all grids, check if any solve them
   // Note: this is NOT efficient
   const allGrids = generateGrids()
@@ -73,4 +139,8 @@ const isSolution = function (grid, hints) {
 }
 
 module.exports.solve = solve
+module.exports.bruteForceSolve = bruteForceSolve
 module.exports.isSolution = isSolution
+module.exports.Possibility = Possibility
+module.exports.possibilitiesPermutations = possibilitiesPermutations
+module.exports.possibilitySolve = possibilitySolve
