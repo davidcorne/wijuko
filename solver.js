@@ -119,10 +119,10 @@ const possibilitiesPermutations = function (possibilities) {
   return result
 }
 
-const generatePossibilities = function(hints) {
-  const possibilities = [];
+const generatePossibilities = function (hints) {
+  const possibilities = []
   for (let i = 0; i < 9; i++) {
-    possibilities.push(new Possibility());
+    possibilities.push(new Possibility())
   }
   if (hints[0]) {
     possibilities[0].hint(hints[0])
