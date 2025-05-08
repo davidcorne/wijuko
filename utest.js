@@ -85,7 +85,7 @@ describe('solve', function () {
       new solver.Possibility(),
       new solver.Possibility(),
       new solver.Possibility(),
-      new solver.Possibility(),
+      new solver.Possibility()
     ]
     possibilities[0].possibilities = [1]
     possibilities[1].possibilities = [1, 2]
