@@ -29,20 +29,19 @@ const solve = function (hints) {
 }
 
 class Possibility {
-
   constructor () {
     this.possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   }
 
-  filter(predicate) {
+  filter (predicate) {
     this.possibilities = this.possibilities.filter((item, index, array) => predicate(item))
   }
 
-  hint(hint) {
+  hint (hint) {
     if (hint === 17) {
       // Can only be 8, 9
       this.filter(item => item === 8 || item === 9)
-      }
+    }
     if (hint === 16) {
       // Can only be 7, 9
       this.filter(item => item === 7 || item === 9)
@@ -57,7 +56,8 @@ class Possibility {
     }
     if (hint === 13) {
       // [4, 9], [5, 8], [6, 7]
-      this.filter(item => item === 4 || item === 9 || item === 5 || item === 8 || item === 6 || item === 7)}
+      this.filter(item => item === 4 || item === 9 || item === 5 || item === 8 || item === 6 || item === 7)
+    }
     if (hint === 12) {
       // [3, 9], [4, 8], [5, 7]
       this.filter(item => item === 3 || item === 9 || item === 4 || item === 8 || item === 5 || item === 7)
@@ -100,27 +100,27 @@ class Possibility {
 }
 
 const possibilitiesPermutations = function (options) {
-  const result = [];
+  const result = []
 
-  function helper(current, index) {
+  function helper (current, index) {
     if (index === options.length) {
-      result.push([...current]);
-      return;
+      result.push([...current])
+      return
     }
 
-    for (let val of options[index].possibilities) {
-      current.push(val);
-      helper(current, index + 1);
-      current.pop();
+    for (const val of options[index].possibilities) {
+      current.push(val)
+      helper(current, index + 1)
+      current.pop()
     }
   }
 
-  helper([], 0);
-  return result;  
+  helper([], 0)
+  return result
 }
 
 /**
- * An algorithm which examains the possible 
+ * An algorithm which examains the possible
  * @param {Array} hints
  * @returns {Array}
  */
@@ -128,7 +128,6 @@ const possibilitySolve = function (options) {
   // Narrow down the possibilities
   return [[9, 7, 3, 6, 8, 5, 4, 1, 2]]
 }
-
 
 /**
  * Return a grid

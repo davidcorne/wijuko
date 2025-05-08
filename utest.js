@@ -62,27 +62,27 @@ describe('solve', function () {
   })
   it('possibillity array permutations', function () {
     const possibilities = [
-      {possibilities: [1, 2]},
-      {possibilities: [3]},
-      {possibilities: [4, 5]},
+      { possibilities: [1, 2] },
+      { possibilities: [3] },
+      { possibilities: [4, 5] }
     ]
     const grids = solver.possibilitiesPermutations(possibilities)
     const expected = [[1, 3, 4], [1, 3, 5], [2, 3, 4], [2, 3, 5]]
     // Sort both arrays to avoid order issues
-    const sortFn = (a, b) => a.join(',').localeCompare(b.join(','));
-    grids.sort(sortFn);
-    expected.sort(sortFn);
+    const sortFn = (a, b) => a.join(',').localeCompare(b.join(','))
+    grids.sort(sortFn)
+    expected.sort(sortFn)
 
-    assert.deepStrictEqual(grids, expected);
+    assert.deepStrictEqual(grids, expected)
   })
   it('possibility narrow', function () {
     const pos1 = new solver.Possibility()
     pos1.hint(17)
-    assert.deepEqual(pos1.possibilities, [8,9])
-    
+    assert.deepEqual(pos1.possibilities, [8, 9])
+
     const pos2 = new solver.Possibility()
     pos2.hint(16)
-    assert.deepEqual(pos2.possibilities, [7,9])
+    assert.deepEqual(pos2.possibilities, [7, 9])
 
     const pos3 = new solver.Possibility()
     pos3.hint(15)
@@ -94,7 +94,6 @@ describe('solve', function () {
     pos4.hint(17)
     pos4.hint(16)
     assert.deepEqual(pos4.possibilities, [9])
-
   })
   it('possibillity solve', function () {
     const hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
