@@ -25,7 +25,7 @@ function generateGrids () {
  * @returns {Array}
  */
 const solve = function (hints) {
-  return bruteForceSolve(hints)
+  return possibilitySolve(hints)
 }
 
 class Possibility {
