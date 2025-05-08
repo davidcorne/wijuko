@@ -88,7 +88,12 @@ describe('solve', function () {
     pos3.hint(15)
     assert.deepEqual(pos3.possibilities, [6, 7, 8, 9])
 
-    // Check that 
+    // Check that hints will remove not reintroduce possibilities
+    const pos4 = new solver.Possibility()
+    // If this space has to add to 17 and 16, it can only be 9
+    pos4.hint(17)
+    pos4.hint(16)
+    assert.deepEqual(pos4.possibilities, [9])
 
   })
   it('possibillity solve', function () {

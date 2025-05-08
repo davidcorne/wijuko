@@ -37,19 +37,22 @@ class Possibility {
   length() {
     return this.possibilities.length
   }
+
+  filter(predicate) {
+    this.possibilities = this.possibilities.filter((item, index, array) => predicate(item))
+  }
   hint(hint) {
     if (hint === 17) {
       // Can only be 8, 9
-      // this.possibilities.filter((item, index, array) =>)
-        this.possibilities = [8, 9]
+      this.filter(item => item === 8 || item === 9)
       }
     if (hint === 16) {
       // Can only be 7, 9
-      this.possibilities = [7, 9]
+      this.filter(item => item === 7 || item === 9)
     }
     if (hint === 15) {
       // Can be 6+
-      this.possibilities = [6, 7, 8, 9]
+      this.filter(item => item >= 6)
     }
   }
 }
