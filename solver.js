@@ -119,6 +119,28 @@ const possibilitiesPermutations = function (possibilities) {
   return result
 }
 
+const prunePossibilities = function (possibilities) {
+  const restarted = new Set()
+  for (let i = 0; i < possibilities.length; ++i) {
+    if (possibilities[i].possibilities.length === 1) {
+      const value = possibilities[i].possibilities[0]
+      if (restarted.has(value)) {
+        continue
+      }
+      restarted.add(value)
+      // The value must be this possiblity, so remove it from the others
+      for (let j = 0; j < possibilities.length; ++j) {
+        if (i !== j) {
+          possibilities[j].filter(item => item !== value)
+        }
+      }
+      // Restart this loop in case we've changed a [a,b] to [a] before this
+      i = -1
+      continue
+    }
+  }
+}
+
 const generatePossibilities = function (hints) {
   const possibilities = []
   for (let i = 0; i < 9; i++) {
@@ -172,6 +194,7 @@ const generatePossibilities = function (hints) {
     possibilities[7].hint(hints[11])
     possibilities[8].hint(hints[11])
   }
+  prunePossibilities(possibilities)
   return possibilities
 }
 
@@ -254,3 +277,4 @@ module.exports.Possibility = Possibility
 module.exports.possibilitiesPermutations = possibilitiesPermutations
 module.exports.possibilitySolve = possibilitySolve
 module.exports.generatePossibilities = generatePossibilities
+module.exports.prunePossibilities = prunePossibilities

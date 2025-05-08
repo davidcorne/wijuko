@@ -75,6 +75,39 @@ describe('solve', function () {
 
     assert.deepStrictEqual(grids, expected)
   })
+  it('possibility prune', function () {
+    const possibilities = [
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+      new solver.Possibility(),
+    ]
+    possibilities[0].possibilities = [1]
+    possibilities[1].possibilities = [1, 2]
+    possibilities[2].possibilities = [3]
+    possibilities[3].possibilities = [3, 4]
+    possibilities[4].possibilities = [3, 5]
+    possibilities[5].possibilities = [3, 6]
+    possibilities[6].possibilities = [3, 7]
+    possibilities[7].possibilities = [3, 8]
+    possibilities[8].possibilities = [3, 9]
+
+    solver.prunePossibilities(possibilities)
+    assert.deepEqual(possibilities[0].possibilities, [1])
+    assert.deepEqual(possibilities[1].possibilities, [2])
+    assert.deepEqual(possibilities[2].possibilities, [3])
+    assert.deepEqual(possibilities[3].possibilities, [4])
+    assert.deepEqual(possibilities[4].possibilities, [5])
+    assert.deepEqual(possibilities[5].possibilities, [6])
+    assert.deepEqual(possibilities[6].possibilities, [7])
+    assert.deepEqual(possibilities[7].possibilities, [8])
+    assert.deepEqual(possibilities[8].possibilities, [9])
+  })
   it('possibility narrow', function () {
     const pos1 = new solver.Possibility()
     pos1.hint(17)
@@ -99,15 +132,15 @@ describe('solve', function () {
     const hints = [9, 13, 5, 16, 10, 12, 13, 11, 14, 5, 13, 6]
     // The grid will be [2, 7, 6, 3, 9, 4, 8, 5, 1]
     const possibilities = solver.generatePossibilities(hints)
-    assert.deepEqual(possibilities[0].possibilities, [1, 2, 3, 4])
+    assert.deepEqual(possibilities[0].possibilities, [1, 2])
     assert.deepEqual(possibilities[1].possibilities, [7])
-    assert.deepEqual(possibilities[2].possibilities, [4, 6, 7, 8, 9])
-    assert.deepEqual(possibilities[3].possibilities, [3, 4])
+    assert.deepEqual(possibilities[2].possibilities, [6, 8])
+    assert.deepEqual(possibilities[3].possibilities, [3])
     assert.deepEqual(possibilities[4].possibilities, [9])
     assert.deepEqual(possibilities[5].possibilities, [4])
-    assert.deepEqual(possibilities[6].possibilities, [4, 5, 6, 7, 8, 9])
+    assert.deepEqual(possibilities[6].possibilities, [6, 8])
     assert.deepEqual(possibilities[7].possibilities, [5])
-    assert.deepEqual(possibilities[8].possibilities, [1, 2, 4])
+    assert.deepEqual(possibilities[8].possibilities, [1, 2])
   })
   it('possibillity solve', function () {
     const hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
