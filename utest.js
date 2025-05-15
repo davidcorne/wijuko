@@ -4,6 +4,7 @@ const chai = require('chai')
 const assert = chai.assert
 
 const wijuko = require('./wijuko')
+const suko = require('./suko')
 const solver = require('./solver')
 
 describe('generate', function () {
@@ -148,5 +149,26 @@ describe('solve', function () {
     // There should only be one solution
     assert.strictEqual(solutions.length, 1)
     assert.deepEqual(solutions[0], [9, 7, 3, 6, 8, 5, 4, 1, 2])
+  })
+})
+describe('Suko', function () {
+  it('Area', function () {
+    const grid = [
+      1, 2, 3,
+      4, 5, 6,
+      7, 8, 9
+    ]
+    const a1 = new suko.Area([0, 1, 2], grid)
+    assert.strictEqual(a1.sum, 6)
+    const a2 = new suko.Area([3, 4, 5], grid)
+    assert.strictEqual(a2.sum, 15)
+    const a3 = new suko.Area([6, 7, 8], grid)
+    assert.strictEqual(a3.sum, 24)
+    const a4 = new suko.Area([0, 1, 2, 3], grid)
+    assert.strictEqual(a4.sum, 10)
+    const a5 = new suko.Area([0, 3, 6], grid)
+    assert.strictEqual(a5.sum, 12)
+    const a6 = new suko.Area([0, 3, 6, 7], grid)
+    assert.strictEqual(a6.sum, 20)
   })
 })

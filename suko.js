@@ -1,21 +1,24 @@
 'use strict'
 
-const solver = require('./solver')
-
-const hintToString = function (hint) {
-  const line = [
-    '<',
-    hint,
-    hint < 10 ? ' ' : '',
-    '>'
-  ]
-  return line.join('')
+class Area {
+  constructor (span, grid) {
+    this.span = span
+    this.sum = 0
+    for (let i = 0; i < this.span.length; ++i) {
+      this.sum += grid[this.span[i]]
+    }
+  }
 }
 
 class Suko {
   constructor (grid) {
     this.grid = grid
-    this.hints = [
+    this.hints = this.fillHints()
+    this.areas = this.fillAreas()
+  }
+
+  fillHints () {
+    return [
       this.grid[0] + this.grid[1] + this.grid[3] + this.grid[4],
       this.grid[1] + this.grid[2] + this.grid[4] + this.grid[5],
       this.grid[3] + this.grid[4] + this.grid[6] + this.grid[7],
@@ -23,10 +26,11 @@ class Suko {
     ]
   }
 
-  fillHints () {
-    
-  }
+  fillAreas () {
+    return [
 
+    ]
+  }
 }
 
 const generateGridArray = function (gen) {
@@ -93,8 +97,8 @@ const main = function () {
   console.log(puzzleAsSVG)
 }
 
-main()
+if (require.main === module) {
+  main()
+}
 
-module.exports.generateSVG = generateSVG
-module.exports.generateGridArray = generateGridArray
-module.exports.generate = generate
+module.exports.Area = Area
