@@ -171,4 +171,25 @@ describe('Suko', function () {
     const a6 = new suko.Area([0, 3, 6, 7], grid)
     assert.strictEqual(a6.sum, 20)
   })
+  it('Suko', function () {
+    const grid = [
+      9, 3, 8,
+      6, 5, 7,
+      4, 1, 2
+    ]
+    const spans = [
+      [0, 1, 3],
+      [4, 6, 7],
+      [2, 5, 8]
+    ]
+    const puzzle = new suko.Suko(grid, spans)
+    assert.strictEqual(puzzle.hints[0], 23)
+    assert.strictEqual(puzzle.hints[1], 23)
+    assert.strictEqual(puzzle.hints[2], 16)
+    assert.strictEqual(puzzle.hints[3], 15)
+
+    assert.strictEqual(puzzle.areas[0].sum, 18)
+    assert.strictEqual(puzzle.areas[1].sum, 10)
+    assert.strictEqual(puzzle.areas[2].sum, 17)
+  })
 })

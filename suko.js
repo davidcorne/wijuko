@@ -11,10 +11,10 @@ class Area {
 }
 
 class Suko {
-  constructor (grid) {
+  constructor (grid, spans) {
     this.grid = grid
     this.hints = this.fillHints()
-    this.areas = this.fillAreas()
+    this.areas = this.fillAreas(spans)
   }
 
   fillHints () {
@@ -26,10 +26,12 @@ class Suko {
     ]
   }
 
-  fillAreas () {
-    return [
-
-    ]
+  fillAreas (spans) {
+    const areas = []
+    for (let i = 0; i < spans.length; ++i) {
+      areas.push(new Area(spans[i], this.grid))
+    }
+    return areas
   }
 }
 
@@ -45,10 +47,19 @@ const generateGridArray = function (gen) {
   return numbers
 }
 
+const generateSpans = function (gen) {
+  return [
+    [0, 1, 3],
+    [4, 6, 7],
+    [2, 5, 8]
+  ]
+}
+
 const generate = function (gen) {
   // Get a new random array for the number grid
   const grid = generateGridArray(gen)
-  const puzzle = new Suko(grid)
+  const spans = generateSpans(gen)
+  const puzzle = new Suko(grid, spans)
   
   return puzzle
 }
@@ -102,3 +113,4 @@ if (require.main === module) {
 }
 
 module.exports.Area = Area
+module.exports.Suko = Suko
