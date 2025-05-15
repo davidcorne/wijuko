@@ -48,11 +48,8 @@ const generateGridArray = function (gen) {
 }
 
 const generateSpans = function (gen) {
-  return [
-    [0, 1, 3],
-    [4, 6, 7],
-    [2, 5, 8]
-  ]
+  const { regionA, regionB, regionC } = generateContiguousRegions(gen);
+  return [regionA, regionB, regionC]
 }
 
 const generate = function (gen) {
@@ -102,14 +99,83 @@ const generateSVG = function (puzzle) {
 `
 }
 
-const main = function () {
-  const puzzleRand = generate(Math.random)
+function getNeighbors(index) {
+  const neighbors = [];
+  const row = Math.floor(index / 3);
+  const col = index % 3;
+
+  if (col > 0) neighbors.push(index - 1);     // left
+  if (col < 2) neighbors.push(index + 1);     // right
+  if (row > 0) neighbors.push(index - 3);     // up
+  if (row < 2) neighbors.push(index + 3);     // down
+
+  return neighbors;
+}
+
+function growRegion(gen, start, size, excluded) {
+  const region = [start];
+  const regionSet = new Set([start]);
+  const frontier = [start];
+
+  while (region.length < size && frontier.length > 0) {
+    const current = frontier.shift();
+    const neighbors = getNeighbors(current)
+      .filter(n => !regionSet.has(n) && !excluded.has(n));
+    
+    if (neighbors.length === 0) continue;
+    const chosen = neighbors[Math.floor(gen() * neighbors.length)];
+    region.push(chosen);
+    regionSet.add(chosen);
+    frontier.push(chosen);
+  }
+
+  return region.length === size ? region : null;
+}
+
+function generateContiguousRegions(gen) {
+  // Choose 3 or 4 length regions.
+  const sizeA = gen() < 0.5 ? 3 : 4
+  // B can't be 4 if A is 4
+  const sizeB = sizeA === 4 || gen() < 0.5 ? 3 : 4
+  const allCells = [...Array(9).keys()];
+
+  let attempts = 0;
+  while (attempts++ < 1000) {
+    const startA = allCells[Math.floor(gen() * allCells.length)];
+    const regionA = growRegion(gen, startA, sizeA, new Set());
+    if (!regionA) continue;
+
+    const used = new Set(regionA);
+    const remaining = allCells.filter(i => !used.has(i));
+    const startB = remaining[Math.floor(gen() * remaining.length)];
+    const regionB = growRegion(gen, startB, sizeB, used);
+    if (!regionB) continue;
+
+    // Work out the unused indicies
+    const setC = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8])
+    const removeFromC = index => setC.delete(index)
+    regionA.forEach(removeFromC)
+    regionB.forEach(removeFromC)
+    const regionC = Array.from(setC)
+    return { regionA, regionB, regionC };
+  }
+
+  throw new Error("Failed to generate valid regions after many attempts.");
+}
+
+
+
+
+const main = function (gen) {
+  const puzzleRand = generate(gen)
   const puzzleAsSVG = generateSVG(puzzleRand)
   console.log(puzzleAsSVG)
+
+  console.log(puzzleRand.areas)
 }
 
 if (require.main === module) {
-  main()
+  main(Math.random)
 }
 
 module.exports.Area = Area
