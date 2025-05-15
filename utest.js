@@ -45,7 +45,7 @@ describe('solve', function () {
   })
   it('bruteForceSolve', function () {
     const hints = [16, 10, 15, 15, undefined, undefined, undefined, 10, undefined, undefined, 5, 3]
-    const solutions = solver.bruteForceSolve(hints)
+    const solutions = solver.bruteForceSolveWijuko(hints)
     // There should only be one solution
     assert.strictEqual(solutions.length, 1)
     assert.deepEqual(solutions[0], [9, 7, 3, 6, 8, 5, 4, 1, 2])
@@ -149,6 +149,33 @@ describe('solve', function () {
     // There should only be one solution
     assert.strictEqual(solutions.length, 1)
     assert.deepEqual(solutions[0], [9, 7, 3, 6, 8, 5, 4, 1, 2])
+  })
+  it('Suko isSolution', function () {
+    const grid = [
+      9, 3, 8,
+      6, 5, 7,
+      4, 1, 2
+    ]
+    const wrongGrid1 = [
+      9, 3, 7,
+      6, 5, 8,
+      4, 1, 2
+    ]
+    // A grid where the hints are right, but the areas are wrong
+    const wrongGrid2 = [
+      5, 7, 8,
+      9, 2, 6,
+      1, 4, 3
+    ]
+    const hints = [23, 23, 16, 15]
+    const spans = [
+      new suko.Area([0, 1, 3], grid),
+      new suko.Area([4, 6, 7], grid),
+      new suko.Area([2, 5, 8], grid)
+    ]
+    assert.ok(solver.isSukoSolution(grid, hints, spans))
+    assert.notOk(solver.isSukoSolution(wrongGrid1, hints, spans))
+    assert.notOk(solver.isSukoSolution(wrongGrid2, hints, spans))
   })
 })
 describe('Suko', function () {

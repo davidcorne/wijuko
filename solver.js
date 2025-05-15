@@ -216,7 +216,7 @@ const possibilitySolve = function (hints) {
  * @param {Array} hints
  * @returns {Array}
  */
-const bruteForceSolve = function (hints) {
+const bruteForceSolveWijuko = function (hints) {
   // Generate all grids, check if any solve them
   // Note: this is NOT efficient
   const allGrids = generateGrids()
@@ -224,10 +224,22 @@ const bruteForceSolve = function (hints) {
   return solutions
 }
 
-const isSolution = function (grid, hints) {
+const bruteForceSolveSuko = function (hints, spans) {
+  // Generate all grids, check if any solve them
+  // Note: this is NOT efficient
+  const allGrids = generateGrids()
+  const solutions = allGrids.filter((grid) => isSukoSolution(grid, hints, spans))
+  return solutions
+}
+
+const correctNumbers = function (grid) {
   // Check there's exactly one of each number, by summing them to 45
   const sum = grid.reduce((a, b) => a + b, 0)
-  if (sum !== 45) {
+  return sum === 45
+}
+
+const isSolution = function (grid, hints) {
+  if (!correctNumbers(grid)) {
     return false
   }
 
@@ -270,9 +282,40 @@ const isSolution = function (grid, hints) {
   return true
 }
 
+const isSukoSolution = function (grid, hints, spans) {
+  if (!correctNumbers(grid)) {
+    return false
+  }
+  if (grid[0] + grid[1] + grid[3] + grid[4] !== hints[0]) {
+    return false
+  }
+  if (grid[1] + grid[2] + grid[4] + grid[5] !== hints[1]) {
+    return false
+  }
+  if (grid[3] + grid[4] + grid[6] + grid[7] !== hints[2]) {
+    return false
+  }
+  if (grid[4] + grid[5] + grid[7] + grid[8] !== hints[3]) {
+    return false
+  }
+  for (let i = 0; i < spans.length; ++i) {
+    const span = spans[i]
+    let sum = 0
+    for (let j = 0; j < span.span.length; ++j) {
+      const index = span.span[j]
+      sum += grid[index]
+    }
+    if (sum !== span.sum) {
+      return false
+    }
+  }
+  return true
+}
+
 module.exports.solve = solve
-module.exports.bruteForceSolve = bruteForceSolve
+module.exports.bruteForceSolveWijuko = bruteForceSolveWijuko
 module.exports.isSolution = isSolution
+module.exports.isSukoSolution = isSukoSolution
 module.exports.Possibility = Possibility
 module.exports.possibilitiesPermutations = possibilitiesPermutations
 module.exports.possibilitySolve = possibilitySolve
