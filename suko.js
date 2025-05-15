@@ -22,7 +22,7 @@ class Suko {
       this.grid[0] + this.grid[1] + this.grid[3] + this.grid[4],
       this.grid[1] + this.grid[2] + this.grid[4] + this.grid[5],
       this.grid[3] + this.grid[4] + this.grid[6] + this.grid[7],
-      this.grid[4] + this.grid[5] + this.grid[7] + this.grid[8],
+      this.grid[4] + this.grid[5] + this.grid[7] + this.grid[8]
     ]
   }
 
@@ -48,7 +48,7 @@ const generateGridArray = function (gen) {
 }
 
 const generateSpans = function (gen) {
-  const { regionA, regionB, regionC } = generateContiguousRegions(gen);
+  const { regionA, regionB, regionC } = generateContiguousRegions(gen)
   return [regionA, regionB, regionC]
 }
 
@@ -57,7 +57,7 @@ const generate = function (gen) {
   const grid = generateGridArray(gen)
   const spans = generateSpans(gen)
   const puzzle = new Suko(grid, spans)
-  
+
   return puzzle
 }
 
@@ -99,57 +99,57 @@ const generateSVG = function (puzzle) {
 `
 }
 
-function getNeighbors(index) {
-  const neighbors = [];
-  const row = Math.floor(index / 3);
-  const col = index % 3;
+function getNeighbors (index) {
+  const neighbors = []
+  const row = Math.floor(index / 3)
+  const col = index % 3
 
-  if (col > 0) neighbors.push(index - 1);     // left
-  if (col < 2) neighbors.push(index + 1);     // right
-  if (row > 0) neighbors.push(index - 3);     // up
-  if (row < 2) neighbors.push(index + 3);     // down
+  if (col > 0) neighbors.push(index - 1) // left
+  if (col < 2) neighbors.push(index + 1) // right
+  if (row > 0) neighbors.push(index - 3) // up
+  if (row < 2) neighbors.push(index + 3) // down
 
-  return neighbors;
+  return neighbors
 }
 
-function growRegion(gen, start, size, excluded) {
-  const region = [start];
-  const regionSet = new Set([start]);
-  const frontier = [start];
+function growRegion (gen, start, size, excluded) {
+  const region = [start]
+  const regionSet = new Set([start])
+  const frontier = [start]
 
   while (region.length < size && frontier.length > 0) {
-    const current = frontier.shift();
+    const current = frontier.shift()
     const neighbors = getNeighbors(current)
-      .filter(n => !regionSet.has(n) && !excluded.has(n));
-    
-    if (neighbors.length === 0) continue;
-    const chosen = neighbors[Math.floor(gen() * neighbors.length)];
-    region.push(chosen);
-    regionSet.add(chosen);
-    frontier.push(chosen);
+      .filter(n => !regionSet.has(n) && !excluded.has(n))
+
+    if (neighbors.length === 0) continue
+    const chosen = neighbors[Math.floor(gen() * neighbors.length)]
+    region.push(chosen)
+    regionSet.add(chosen)
+    frontier.push(chosen)
   }
 
-  return region.length === size ? region : null;
+  return region.length === size ? region : null
 }
 
-function generateContiguousRegions(gen) {
+function generateContiguousRegions (gen) {
   // Choose 3 or 4 length regions.
   const sizeA = gen() < 0.5 ? 3 : 4
   // B can't be 4 if A is 4
   const sizeB = sizeA === 4 || gen() < 0.5 ? 3 : 4
-  const allCells = [...Array(9).keys()];
+  const allCells = [...Array(9).keys()]
 
-  let attempts = 0;
+  let attempts = 0
   while (attempts++ < 1000) {
-    const startA = allCells[Math.floor(gen() * allCells.length)];
-    const regionA = growRegion(gen, startA, sizeA, new Set());
-    if (!regionA) continue;
+    const startA = allCells[Math.floor(gen() * allCells.length)]
+    const regionA = growRegion(gen, startA, sizeA, new Set())
+    if (!regionA) continue
 
-    const used = new Set(regionA);
-    const remaining = allCells.filter(i => !used.has(i));
-    const startB = remaining[Math.floor(gen() * remaining.length)];
-    const regionB = growRegion(gen, startB, sizeB, used);
-    if (!regionB) continue;
+    const used = new Set(regionA)
+    const remaining = allCells.filter(i => !used.has(i))
+    const startB = remaining[Math.floor(gen() * remaining.length)]
+    const regionB = growRegion(gen, startB, sizeB, used)
+    if (!regionB) continue
 
     // Work out the unused indicies
     const setC = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8])
@@ -157,14 +157,11 @@ function generateContiguousRegions(gen) {
     regionA.forEach(removeFromC)
     regionB.forEach(removeFromC)
     const regionC = Array.from(setC)
-    return { regionA, regionB, regionC };
+    return { regionA, regionB, regionC }
   }
 
-  throw new Error("Failed to generate valid regions after many attempts.");
+  throw new Error('Failed to generate valid regions after many attempts.')
 }
-
-
-
 
 const main = function (gen) {
   const puzzleRand = generate(gen)
