@@ -166,7 +166,7 @@ function growRegion (gen, start, size, excluded) {
   return region.length === size ? region : null
 }
 
-function arraysEqual(a, b) {
+function arraysEqual (a, b) {
   if (a.length !== b.length) {
     return false
   }
@@ -179,16 +179,16 @@ function arraysEqual(a, b) {
 }
 
 /**
- * 
- * @param {Array} region 
+ *
+ * @param {Array} region
  * @returns Boolean
  */
-function invalidRegion(region) {
+function invalidRegion (region) {
   if (region.length < 2 || region.length > 4) {
     // Can't have a region of 1 or 5+
     return true
   }
-  const sortedRegion = [...region].sort((a, b) => a - b);
+  const sortedRegion = [...region].sort((a, b) => a - b)
   const invalidRegions = [
     [0, 1, 3, 4],
     [1, 2, 4, 5],
@@ -281,7 +281,7 @@ const generateA4HTML = function (gen) {
         page-break-after: always;
       }`
 
-    let html = `<!DOCTYPE html>
+  let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -291,21 +291,21 @@ const generateA4HTML = function (gen) {
 <body>
   <div class="a4-page">
     <!-- First Page -->`
-    for (let i = 0; i < 12; ++i) {
-      html += `<div class="svg-wrapper">
+  for (let i = 0; i < 12; ++i) {
+    html += `<div class="svg-wrapper">
       ${svgs[i]}
-    </div>`  
-    }
-    html += `</div>
+    </div>`
+  }
+  html += `</div>
 
   <!-- Second Page -->
   <div class="a4-page">`
   for (let i = 12; i < 24; ++i) {
-      html += `<div class="svg-wrapper">
+    html += `<div class="svg-wrapper">
       ${svgs[i]}
-    </div>`  
-    }
-    html += `</div>
+    </div>`
+  }
+  html += `</div>
 </body>
 </html>`
   return html

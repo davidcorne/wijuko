@@ -222,13 +222,13 @@ describe('Suko', function () {
   it('invalid region', function () {
     // the regions:
     //  [0, 1, 3, 4],
-    //  [1, 2, 4, 5], 
+    //  [1, 2, 4, 5],
     //  [3, 4, 6, 7],
     //  [4, 5, 7, 8]
     // are all invalid, the order of the indicies don't matter
     const invalidRegions = [
       [1, 3, 4, 0],
-      [1, 2, 4, 5], 
+      [1, 2, 4, 5],
       [3, 4, 6, 7],
       [4, 5, 7, 8],
       [1],
@@ -246,6 +246,5 @@ describe('Suko', function () {
     validRegions.forEach(region => {
       assert.notOk(suko.invalidRegion(region), region)
     })
-
   })
 })
