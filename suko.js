@@ -243,25 +243,25 @@ const generateSukoSolutionSVG = function (grid) {
   <rect x="0" y="0" width="60" height="60" stroke="black" fill="none" stroke-width="2"/>
   <g font-size="10" text-anchor="middle">
     <!-- Row 0 -->
-    <text x="10"  y="10">${grid[0]}</text>
-    <text x="30" y="10">${grid[1]}</text>
-    <text x="50" y="10">${grid[2]}</text>
+    <text x="10" y="12">${grid[0]}</text>
+    <text x="30" y="12">${grid[1]}</text>
+    <text x="50" y="12">${grid[2]}</text>
 
     <!-- Row 1 -->
-    <text x="10"  y="30">${grid[3]}</text>
-    <text x="30" y="30">${grid[4]}</text>
-    <text x="50" y="30">${grid[5]}</text>
+    <text x="10" y="32">${grid[3]}</text>
+    <text x="30" y="32">${grid[4]}</text>
+    <text x="50" y="32">${grid[5]}</text>
 
     <!-- Row 2 -->
-    <text x="10" y="50">${grid[6]}</text>
-    <text x="30" y="50">${grid[7]}</text>
-    <text x="50" y="50">${grid[8]}</text>
+    <text x="10" y="52">${grid[6]}</text>
+    <text x="30" y="52">${grid[7]}</text>
+    <text x="50" y="52">${grid[8]}</text>
   </g>
   `
   return svg
 }
 
-const generateA4HTML = function (gen) {
+const generateDoubleA4SpreadHTML = function (gen) {
   const svgs = []
   const solutions = []
   // you can lay out 12 200x250 svgs on an A4 page
@@ -369,7 +369,7 @@ const generateA4HTML = function (gen) {
 }
 
 if (require.main === module) {
-  const html = generateA4HTML(Math.random)
+  const html = generateDoubleA4SpreadHTML(Math.random)
   console.log(html)
 }
 
