@@ -206,7 +206,7 @@ const generateSukoSVG = function (gen) {
 const generateA4HTML = function (gen) {
   const svgs = []
   // you can lay out 12 200x250 svgs on an A4 page
-  for (let i = 0; i < 12; ++i) {
+  for (let i = 0; i < 24; ++i) {
     const puzzleRand = generate(gen)
     const puzzleAsSVG = generateSVG(puzzleRand)
     svgs.push(puzzleAsSVG)
@@ -226,13 +226,25 @@ const generateA4HTML = function (gen) {
       box-sizing: border-box;
       border: 1px solid #ccc;
       margin: 0 auto;
+      page-break-after: always;
     }
 
     .svg-wrapper {
       width: 200px;
       height: 250px;
       border: 1px solid #999;
-    }`
+      box-sizing: border-box;
+    }
+      
+    @media print {
+      body {
+        background: none;
+      }
+
+      .a4-page {
+        margin: 0;
+        page-break-after: always;
+      }`
 
     let html = `<!DOCTYPE html>
 <html lang="en">
@@ -243,8 +255,17 @@ const generateA4HTML = function (gen) {
 </head>
 <body>
   <div class="a4-page">
-    <!-- Repeat 12 SVGs -->`
-    for (let i = 0; i < svgs.length; ++i) {
+    <!-- First Page -->`
+    for (let i = 0; i < 12; ++i) {
+      html += `<div class="svg-wrapper">
+      ${svgs[i]}
+    </div>`  
+    }
+    html += `</div>
+
+  <!-- Second Page -->
+  <div class="a4-page">`
+  for (let i = 12; i < 24; ++i) {
       html += `<div class="svg-wrapper">
       ${svgs[i]}
     </div>`  
