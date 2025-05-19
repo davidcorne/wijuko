@@ -197,16 +197,14 @@ function generateContiguousRegions (gen) {
   throw new Error('Failed to generate valid regions after many attempts.')
 }
 
-const main = function (gen) {
+const generateSukoSVG = function (gen) {
   const puzzleRand = generate(gen)
   const puzzleAsSVG = generateSVG(puzzleRand)
   console.log(puzzleAsSVG)
-
-  console.error(puzzleRand.areas)
 }
 
 if (require.main === module) {
-  main(Math.random)
+  generateSukoSVG(Math.random)
 }
 
 module.exports.Area = Area
