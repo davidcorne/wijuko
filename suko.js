@@ -166,6 +166,38 @@ function growRegion (gen, start, size, excluded) {
   return region.length === size ? region : null
 }
 
+function arraysEqual(a, b) {
+  if (a.length !== b.length) {
+    return false
+  }
+  for (let i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) {
+      return false
+    }
+  }
+  return true
+}
+
+/**
+ * 
+ * @param {Array} region 
+ * @returns Boolean
+ */
+function invalidRegion(region) {
+  if (region.length < 2 || region.length > 4) {
+    // Can't have a region of 1 or 5+
+    return true
+  }
+  const sortedRegion = [...region].sort((a, b) => a - b);
+  const invalidRegions = [
+    [0, 1, 3, 4],
+    [1, 2, 4, 5],
+    [3, 4, 6, 7],
+    [4, 5, 7, 8]
+  ]
+  return invalidRegions.some(region => arraysEqual(sortedRegion, region))
+}
+
 function generateContiguousRegions (gen) {
   // Choose 3 or 4 length regions.
   const sizeA = gen() < 0.5 ? 3 : 4
@@ -191,6 +223,9 @@ function generateContiguousRegions (gen) {
     regionA.forEach(removeFromC)
     regionB.forEach(removeFromC)
     const regionC = Array.from(setC)
+    if (invalidRegion(regionA) || invalidRegion(regionB) || invalidRegion(regionC)) {
+      continue
+    }
     return { regionA, regionB, regionC }
   }
 
@@ -283,3 +318,5 @@ if (require.main === module) {
 
 module.exports.Area = Area
 module.exports.Suko = Suko
+module.exports.generateSukoSVG = generateSukoSVG
+module.exports.invalidRegion = invalidRegion

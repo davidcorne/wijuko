@@ -219,4 +219,33 @@ describe('Suko', function () {
     assert.strictEqual(puzzle.areas[1].sum, 10)
     assert.strictEqual(puzzle.areas[2].sum, 17)
   })
+  it('invalid region', function () {
+    // the regions:
+    //  [0, 1, 3, 4],
+    //  [1, 2, 4, 5], 
+    //  [3, 4, 6, 7],
+    //  [4, 5, 7, 8]
+    // are all invalid, the order of the indicies don't matter
+    const invalidRegions = [
+      [1, 3, 4, 0],
+      [1, 2, 4, 5], 
+      [3, 4, 6, 7],
+      [4, 5, 7, 8],
+      [1],
+      [0]
+    ]
+    invalidRegions.forEach(region => {
+      assert.ok(suko.invalidRegion(region), region)
+    })
+    const validRegions = [
+      [1, 2],
+      [0, 1, 2],
+      [0, 1, 3],
+      [5, 8]
+    ]
+    validRegions.forEach(region => {
+      assert.notOk(suko.invalidRegion(region), region)
+    })
+
+  })
 })
