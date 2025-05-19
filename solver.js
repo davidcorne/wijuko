@@ -313,6 +313,7 @@ const isSukoSolution = function (grid, hints, spans) {
 }
 
 module.exports.solve = solve
+module.exports.bruteForceSolveSuko = bruteForceSolveSuko
 module.exports.bruteForceSolveWijuko = bruteForceSolveWijuko
 module.exports.isSolution = isSolution
 module.exports.isSukoSolution = isSukoSolution

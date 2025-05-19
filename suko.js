@@ -62,12 +62,33 @@ const generate = function (gen) {
 }
 
 const generateSVG = function (puzzle) {
-  return `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  const colours = new Array(9)
+  const referenceColours = ['white', '#d3d3d3', '#555555']
+  for (let i = 0; i < puzzle.areas.length; ++i) {
+    const currentColour = referenceColours[i]
+    for (let j = 0; j < puzzle.areas[i].span.length; ++j) {
+      colours[puzzle.areas[i].span[j]] = currentColour
+    }
+  }
+  return `<svg width="200" height="250" xmlns="http://www.w3.org/2000/svg">
     <!-- Solution -->
     <!-- ${puzzle.grid[0]} ${puzzle.grid[1]} ${puzzle.grid[2]}-->
     <!-- ${puzzle.grid[3]} ${puzzle.grid[4]} ${puzzle.grid[5]}-->
     <!-- ${puzzle.grid[6]} ${puzzle.grid[7]} ${puzzle.grid[8]}-->
   
+  <g>
+    <rect x="0" y="0" width="66.67" height="66.67" fill="${colours[0]}" />
+    <rect x="66.67" y="0" width="66.67" height="66.67" fill="${colours[1]}" />
+    <rect x="133.33" y="0" width="66.67" height="66.67" fill="${colours[2]}" />
+
+    <rect x="0" y="66.67" width="66.67" height="66.67" fill="${colours[3]}" />
+    <rect x="66.67" y="66.67" width="66.67" height="66.67" fill="${colours[4]}" />
+    <rect x="133.33" y="66.67" width="66.67" height="66.67" fill="${colours[5]}" />
+
+    <rect x="0" y="133.33" width="66.67" height="66.67" fill="${colours[6]}" />
+    <rect x="66.67" y="133.33" width="66.67" height="66.67" fill="${colours[7]}" />
+    <rect x="133.33" y="133.33" width="66.67" height="66.67" fill="${colours[8]}" />
+  </g>
     <!-- Outer border -->
   <rect x="0" y="0" width="200" height="200" stroke="black" fill="none" stroke-width="2"/>
 
@@ -95,6 +116,19 @@ const generateSVG = function (puzzle) {
     <circle cx="133.33" cy="133.33" r="12" />
     <text x="133.33" y="138.33" font-size="10" text-anchor="middle" fill="black">${puzzle.hints[3]}</text>
   </g>
+
+  <!-- Circles with numbers at the bottom for the sums of the areas -->
+  <g fill="white" stroke="black">
+    <circle cx="66.67" cy="225" r="12" fill="${referenceColours[0]}"/>
+    <text x="66.67" y="230" font-size="10" text-anchor="middle" fill="black">${puzzle.areas[0].sum}</text>
+  
+    <circle cx="100" cy="225" r="12" fill="${referenceColours[1]}"/>
+    <text x="100" y="230" font-size="10" text-anchor="middle" fill="black">${puzzle.areas[1].sum}</text>
+  
+    <circle cx="133.3" cy="225" r="12" fill="${referenceColours[2]}"/>
+    <text x="133.3" y="230" font-size="10" text-anchor="middle" fill="black">${puzzle.areas[2].sum}</text>
+  </g>
+
 </svg>
 `
 }
@@ -168,7 +202,7 @@ const main = function (gen) {
   const puzzleAsSVG = generateSVG(puzzleRand)
   console.log(puzzleAsSVG)
 
-  console.log(puzzleRand.areas)
+  console.error(puzzleRand.areas)
 }
 
 if (require.main === module) {
