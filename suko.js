@@ -63,7 +63,7 @@ const generate = function (gen) {
 
 const generateSVG = function (puzzle) {
   const colours = new Array(9)
-  const referenceColours = ['white', '#d3d3d3', '#555555']
+  const referenceColours = ['white', '#e9e9e9', '#d3d3d3']
   for (let i = 0; i < puzzle.areas.length; ++i) {
     const currentColour = referenceColours[i]
     for (let j = 0; j < puzzle.areas[i].span.length; ++j) {
