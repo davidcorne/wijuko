@@ -264,7 +264,7 @@ const generateSukoSolutionSVG = function (grid) {
 const generateDoubleA4SpreadHTML = function (gen) {
   const svgs = []
   const solutions = []
-  // you can lay out 12 200x250 svgs on an A4 page
+  // you can lay out 12 200x250 svgs on an A4 page. Show 12 on page 1, 9 on page 2 and the solutions.
   for (let i = 0; i < 21; ++i) {
     const puzzleRand = generate(gen)
     const puzzleAsSVG = generateSVG(puzzleRand)
