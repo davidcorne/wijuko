@@ -257,7 +257,7 @@ const generateA4HTML = function (gen) {
       display: grid;
       grid-template-columns: repeat(3, 200px);
       grid-template-rows: repeat(4, 250px);
-      gap: 24.6px 48.5px;
+      gap: 30.75px 97px;
       box-sizing: border-box;
       border: 1px solid #ccc;
       margin: 0 auto;
@@ -265,10 +265,8 @@ const generateA4HTML = function (gen) {
     }
 
     .svg-wrapper {
-      width: 200px;
-      height: 250px;
-      border: 1px solid #999;
-      box-sizing: border-box;
+      width: 250px;
+      height: 312.5px;
     }
       
     @media print {
@@ -285,7 +283,7 @@ const generateA4HTML = function (gen) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SVG Layout on A4</title>
+  <title>Suko Puzzles</title>
   <style>${style}</style>
 </head>
 <body>
