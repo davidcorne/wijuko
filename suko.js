@@ -336,7 +336,7 @@ const generateDoubleA4SpreadHTML = function (gen) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SVG Grid Pages</title>
+  <title>Suko Puzzles</title>
   <style>
     ${style}
   </style>
