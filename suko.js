@@ -200,11 +200,64 @@ function generateContiguousRegions (gen) {
 const generateSukoSVG = function (gen) {
   const puzzleRand = generate(gen)
   const puzzleAsSVG = generateSVG(puzzleRand)
-  console.log(puzzleAsSVG)
+  return puzzleAsSVG
+}
+
+const generateA4HTML = function (gen) {
+  const svgs = []
+  // you can lay out 12 200x250 svgs on an A4 page
+  for (let i = 0; i < 12; ++i) {
+    const puzzleRand = generate(gen)
+    const puzzleAsSVG = generateSVG(puzzleRand)
+    svgs.push(puzzleAsSVG)
+  }
+  const style = `body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .a4-page {
+      width: 794px;   /* A4 width at 96dpi */
+      height: 1123px; /* A4 height at 96dpi */
+      display: grid;
+      grid-template-columns: repeat(3, 200px);
+      grid-template-rows: repeat(4, 250px);
+      gap: 24.6px 48.5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      margin: 0 auto;
+    }
+
+    .svg-wrapper {
+      width: 200px;
+      height: 250px;
+      border: 1px solid #999;
+    }`
+
+    let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Layout on A4</title>
+  <style>${style}</style>
+</head>
+<body>
+  <div class="a4-page">
+    <!-- Repeat 12 SVGs -->`
+    for (let i = 0; i < svgs.length; ++i) {
+      html += `<div class="svg-wrapper">
+      ${svgs[i]}
+    </div>`  
+    }
+    html += `</div>
+</body>
+</html>`
+  return html
 }
 
 if (require.main === module) {
-  generateSukoSVG(Math.random)
+  const html = generateA4HTML(Math.random)
+  console.log(html)
 }
 
 module.exports.Area = Area
