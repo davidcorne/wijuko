@@ -238,37 +238,89 @@ const generateSukoSVG = function (gen) {
   return puzzleAsSVG
 }
 
+const generateSukoSolutionSVG = function (grid) {
+  const svg = `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="60" height="60" stroke="black" fill="none" stroke-width="2"/>
+  <g font-size="10" text-anchor="middle">
+    <!-- Row 0 -->
+    <text x="10"  y="10">${grid[0]}</text>
+    <text x="30" y="10">${grid[1]}</text>
+    <text x="50" y="10">${grid[2]}</text>
+
+    <!-- Row 1 -->
+    <text x="10"  y="30">${grid[3]}</text>
+    <text x="30" y="30">${grid[4]}</text>
+    <text x="50" y="30">${grid[5]}</text>
+
+    <!-- Row 2 -->
+    <text x="10" y="50">${grid[6]}</text>
+    <text x="30" y="50">${grid[7]}</text>
+    <text x="50" y="50">${grid[8]}</text>
+  </g>
+  `
+  return svg
+}
+
 const generateA4HTML = function (gen) {
   const svgs = []
+  const solutions = []
   // you can lay out 12 200x250 svgs on an A4 page
-  for (let i = 0; i < 24; ++i) {
+  for (let i = 0; i < 21; ++i) {
     const puzzleRand = generate(gen)
     const puzzleAsSVG = generateSVG(puzzleRand)
     svgs.push(puzzleAsSVG)
+    const solution = generateSukoSolutionSVG(puzzleRand.grid)
+    solutions.push(solution)
   }
   const style = `body {
       margin: 0;
       padding: 0;
+      background: #eee;
     }
 
     .a4-page {
       width: 794px;   /* A4 width at 96dpi */
       height: 1123px; /* A4 height at 96dpi */
-      display: grid;
-      grid-template-columns: repeat(3, 200px);
-      grid-template-rows: repeat(4, 250px);
-      gap: 30.75px 97px;
+      margin: 20px auto;
+      background: white;
       box-sizing: border-box;
-      border: 1px solid #ccc;
-      margin: 0 auto;
       page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      
     }
 
-    .svg-wrapper {
-      width: 250px;
-      height: 312.5px;
+    .grid-large-3x4, .grid-large-3x3 {
+      display: grid;
+      grid-template-columns: repeat(3, 200px);
+      column-gap: 48.5px;
+      row-gap: 30.75x;
     }
-      
+
+    .grid-large-3x4 {
+      grid-template-rows: repeat(4, 250px);
+    }
+
+    .grid-large-3x3 {
+      grid-template-rows: repeat(3, 250px);
+    }
+
+    .grid-small {
+      display: grid;
+      grid-template-columns: repeat(7, 60px);
+      grid-auto-rows: 60px;
+      column-gap: 44px;
+      row-gap: 30px;
+      margin-top: 40px;
+    }
+
+    .svg-large, .svg-small {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     @media print {
       body {
         background: none;
@@ -277,36 +329,43 @@ const generateA4HTML = function (gen) {
       .a4-page {
         margin: 0;
         page-break-after: always;
-      }`
-
-  let html = `<!DOCTYPE html>
+      }
+    }`
+  return `
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Suko Puzzles</title>
-  <style>${style}</style>
+  <title>SVG Grid Pages</title>
+  <style>
+    ${style}
+  </style>
 </head>
 <body>
-  <div class="a4-page">
-    <!-- First Page -->`
-  for (let i = 0; i < 12; ++i) {
-    html += `<div class="svg-wrapper">
-      ${svgs[i]}
-    </div>`
-  }
-  html += `</div>
+  <div id="container">
 
-  <!-- Second Page -->
-  <div class="a4-page">`
-  for (let i = 12; i < 24; ++i) {
-    html += `<div class="svg-wrapper">
-      ${svgs[i]}
-    </div>`
-  }
-  html += `</div>
+    <!-- Page 1: First 12 large SVGs -->
+    <div class="a4-page">
+      <div class="grid-large-3x4">
+        ${svgs.slice(0, 12).map(svg => `<div class="svg-large">${svg}</div>`).join('\n')}
+      </div>
+    </div>
+
+    <!-- Page 2: Next 9 large SVGs and 21 small ones -->
+    <div class="a4-page">
+      <div class="grid-large-3x3">
+        ${svgs.slice(12).map(svg => `<div class="svg-large">${svg}</div>`).join('\n')}
+      </div>
+
+      <div class="grid-small">
+        ${solutions.map(svg => `<div class="svg-small">${svg}</div>`).join('\n')}
+      </div>
+    </div>
+
+  </div>
 </body>
-</html>`
-  return html
+</html>
+  `
 }
 
 if (require.main === module) {
