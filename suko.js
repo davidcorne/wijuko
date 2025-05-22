@@ -63,7 +63,7 @@ const generate = function (gen) {
 
 const generateSVG = function (puzzle) {
   const colours = new Array(9)
-  const referenceColours = ['white', '#e9e9e9', '#d3d3d3']
+  const referenceColours = ['white', 'url(#circles-1)', '#d3d3d3']
   for (let i = 0; i < puzzle.areas.length; ++i) {
     const currentColour = referenceColours[i]
     for (let j = 0; j < puzzle.areas[i].span.length; ++j) {
@@ -75,7 +75,13 @@ const generateSVG = function (puzzle) {
     <!-- ${puzzle.grid[0]} ${puzzle.grid[1]} ${puzzle.grid[2]}-->
     <!-- ${puzzle.grid[3]} ${puzzle.grid[4]} ${puzzle.grid[5]}-->
     <!-- ${puzzle.grid[6]} ${puzzle.grid[7]} ${puzzle.grid[8]}-->
-  
+  <defs> 
+    <pattern id="circles-1" patternUnits="userSpaceOnUse" width="10" height="10"> 
+      <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPScjZmZmJyAvPgogIDxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSIjMDAwIi8+Cjwvc3ZnPg==" 
+        x="0" y="0" width="10" height="10">
+      </image> 
+    </pattern> 
+  </defs> 
   <g>
     <rect x="0" y="0" width="66.67" height="66.67" fill="${colours[0]}" />
     <rect x="66.67" y="0" width="66.67" height="66.67" fill="${colours[1]}" />
